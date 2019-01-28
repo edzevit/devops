@@ -1,0 +1,168 @@
+git installation 
+###verifier packet git 
+[root@server1 ~]# rpm -qa | grep git
+linux-firmware-20170606-56.gitc990aae.el7.noarch
+net-tools-2.0-0.24.20131004git.el7.x86_64
+crontabs-1.11-6.20121102git.el7.noarch
+
+yum install git
+
+## verifay git installation 
+
+git version 
+gir repository 
+
+working direcoty => add git to Staging area  => git commit to "local repository"   => git push  to "Remote repository"
+process unazad:
+"Remote direcoty"  => git fetch   to "local repository"    git checkout to => working direcoty"
+
+1) create the project 
+mldir project_devops
+2)create all repository
+cd project_devops
+git init  # initialisation git , hi will create local repository
+[root@server1 project_devops]# ls -la
+total 4
+drwxr-xr-x. 3 root root   18 23 janv. 07:29 .
+dr-xr-x---. 6 root root 4096 23 janv. 07:29 ..
+drwxr-xr-x. 7 root root  119 23 janv. 07:29 .git
+
+# u .git it is containt meta information 
+# creat file 
+[root@server1 project_devops]# vi test.rb
+[root@server1 project_devops]# git status
+# On branch master
+
+# Initial commit
+
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)  
+#    test.rb
+nothing added to commit but untracked files present (use "git add" to track)
+
+########untracked is not controle by git
+#put this file in staging area by commande "git add file"
+git add test 
+[root@server1 project_devops]# git status
+# On branch master
+# Initial commit
+# Changes to be committed:
+#   (use "git rm --cached <file>..." to unstage)
+#       new file:   test.rb
+
+#### This file is now in staging area (green color)
+# sada se file nalazi i u staging area i u working direcoty
+
+Next phase is to put in "local repository" with commande commit
+[master (root-commit) e31d64e] initial commit
+ 1 file changed, 2 insertions(+)
+ create mode 100644 test.rb
+ 
+ git commit -m 'initial commit' test.rb
+ 
+[root@server1 project_devops]# git status
+# On branch master
+nothing to commit, working directory clean
+
+#################Multiple version of file
+git log
+
+Promeniste sadrzaj fajla , vi test.rb
+git status
+ sa da se vidi da je file promenjenn 
+modified:   test.rb
+ 
+ 
+ update local repositor 
+ 
+ git diff test.rb
+ 
+ 
+git status
+git add test.rb
+git status
+
+git commit -m 'nova verzija' test.rb
+
+
+git log # to se the changes for file 
+
+commit 648e45a1271e7cb22daa31fb1313ac5de91c88aa
+Author: edzi <edzi2001@hotmail.com>
+Date:   Wed Jan 23 12:55:00 2019 +0100
+
+#ovde imlam hash algoritama;  commit, ovo mozemo da vidimo i na drugi nacin 
+ 
+[root@server1 project_devops]# git log --oneline
+648e45a versija dva
+2f8e92b nova verzija
+e31d64e initial commit
+
+######GIT soft and hard reset #########################################
+
+ Kako da vratimo poslednju versziju fajla
+ git reset --soft # it will reset last commit 
+ 
+  git reset --soft HEAD^ # ^ znaci ako hocemo da se vratimo jednu verziju unzad, ili ^^ dve verzije unazat
+  
+  from staging area 
+  
+  git reset HEAD test.rb
+  [root@server1 project_devops]# git reset HEAD test.rb
+Unstaged changes after reset:
+M       test.rb
+
+this file is not in the staging area
+ ##### how the HARD reset works
+ [root@server1 project_devops]# git log --oneline
+648e45a versija dva
+2f8e92b nova verzija
+e31d64e initial commit
+
+git reset --hard HEAD^
+[root@server1 project_devops]# git reset --hard HEAD^
+HEAD is now at 2f8e92b nova verzija
+
+HARD reset vraca file direktno in wooring direcoty, u predhodnu verziju 
+This is complitily remove
+
+###################### Remote hub 
+sada mozemo da kreiramo nalog na github i da tamo posaeljemo kod  https://github.com/edzevit/devops.git; 
+to je public , bez usera i passwor
+
+git remote add origin https://github.com/edzevit/devops.git
+
+[root@server1 project_devops]# git remote add origin https://github.com/edzevit/devops.git
+[root@server1 project_devops]# git remote -v
+origin  https://github.com/edzevit/devops.git (fetch)
+origin  https://github.com/edzevit/devops.git (push)
+
+SAda treba da posaljemo ovaj kod  git hub
+
+
+git push -u origin master
+
+[root@server1 project_devops]# git push -u origin master
+Username for 'https://github.com': edzevit
+Password for 'https://edzevit@github.com':
+Counting objects: 6, done.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (6/6), 461 bytes | 0 bytes/s, done.
+Total 6 (delta 0), reused 0 (delta 0)
+To https://github.com/edzevit/devops.git
+ * [new branch]      master -> master
+Branch master set up to track remote branch master from origin.
+
+
+############GIT clone
+
+ako neko weli da se prikljci nasem timo on mora da se preuzme kad sa sajta
+
+ulogje se na svoj server i kuca 
+
+git clone git@github.com:edzevit/devops.git
+git clone https://github.com/edzevit/devops.git
+
+ 
+
+
