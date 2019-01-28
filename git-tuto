@@ -166,3 +166,13 @@ git clone https://github.com/edzevit/devops.git
  
 
 
+ovo je dodato sa drugog servera
+461  vi test.rb
+  462  git add .
+  463  dit status
+  464  git status
+  465  git commit -m 'novi fajlovi' .
+  466  git status
+  467  git push -u origin master
+  468  history
+
